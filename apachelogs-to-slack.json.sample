@@ -1,0 +1,16 @@
+{
+    "slackWebHookUrl": "https://hooks.slack.com/services/[YOUR-WEBHOOK-URL]",
+    "hashFile": "/tmp/apachelogs-to-slack.txt",
+    "rules": [
+        {
+            "field": 3,
+            "regex": "^3",
+            "message": "Error #3 (#1)"
+        },
+        {
+            "field": 3,
+            "regex": "^500$",
+            "message": "Error #3 (#1): #2" 
+        }
+    ] 
+}
