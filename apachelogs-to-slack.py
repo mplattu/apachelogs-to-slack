@@ -113,7 +113,5 @@ logChecker = LogChecker(settings.getSettings())
 for logLine in fileinput.input():
     logChecker.addLogLine(logLine)
 
-print(logChecker.getWarnings())
-
 slackNotifier = SlackNotifier(settings.getSettings())
 slackNotifier.notify(logChecker.getWarnings())
