@@ -8,6 +8,8 @@ import json
 import re
 import requests
 
+from typing import List
+
 class Settings:
     def __init__(self, settingsFilePath):
         self.settings = {}
@@ -44,11 +46,11 @@ class LogChecker:
         
         self.hashStorage = HashStorage(self.settings['hashFile'])
 
-    def processLine (self, lineToParse: str) -> list[str]:
+    def processLine (self, lineToParse: str) -> List[str]:
         apacheCombinedRe = r'^([(\d\.)]+) [^ ]* [^ ]* \[([^ ]* [^ ]*)\] "([^"]*)" (\d+) [^ ]* "([^"]*)" "([^"]*)"'
         return re.match(apacheCombinedRe, lineToParse).groups()
 
-    def messageFormatter(self, message:str, logArray: list[str]) -> str:
+    def messageFormatter(self, message:str, logArray: List[str]) -> str:
         for index in range(len(logArray)):
             indexRegex = re.compile("#"+str(index))
             message = re.sub(indexRegex, logArray[index], message)
@@ -86,7 +88,7 @@ class LogChecker:
         if self.lastProcessedHashFromPreviousSession == self.lastProcessedLogLineHash:
             self.warnings = []
 
-    def getWarnings (self) -> list[str]:
+    def getWarnings (self) -> List[str]:
         self.hashStorage.writeHash(self.lastProcessedLogLineHash)
         return self.warnings
     
@@ -97,7 +99,7 @@ class SlackNotifier:
     def __init__(self, settings):
         self.settings = settings
     
-    def notify(self, messages: list[str]):
+    def notify(self, messages: List[str]):
         for message in messages:
             payload = {'text': message}
             response = requests.post(self.settings['slackWebHookUrl'], json=payload)
