@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-SETTINGS = 'apachelogs-to-slack.json'
-
 import fileinput
 import hashlib
 import json
+import os
 import re
 import requests
 
 from typing import List
+
+SETTINGS = os.path.dirname(os.path.abspath(__file__)) + '/apachelogs-to-slack.json'
 
 class Settings:
     def __init__(self, settingsFilePath):
