@@ -48,7 +48,7 @@ class LogChecker:
         self.hashStorage = HashStorage(self.settings['hashFile'])
 
     def processLine (self, lineToParse: str) -> List[str]:
-        apacheCombinedRe = r'^([(\d\.)]+) [^ ]* [^ ]* \[([^ ]* [^ ]*)\] "([^"]*)" (\d+) [^ ]* "([^"]*)" "([^"]*)"'
+        apacheCombinedRe = r'^([(\d\.:abcdef)]+) [^ ]* [^ ]* \[([^ ]* [^ ]*)\] "([^"]*)" (\d+) [^ ]* "([^"]*)" "([^"]*)"'
         return re.match(apacheCombinedRe, lineToParse).groups()
 
     def messageFormatter(self, message:str, logArray: List[str]) -> str:
