@@ -35,6 +35,9 @@ class HashStorage:
         return content
 
     def writeHash(self, hash: str):
+        if hash is None:
+            return
+
         with open(self.hashFilePath, 'w', encoding='utf-8') as file:
             file.write(hash)
 
@@ -90,7 +93,8 @@ class LogChecker:
             self.warnings = []
 
     def getWarnings (self) -> List[str]:
-        self.hashStorage.writeHash(self.lastProcessedLogLineHash)
+        if self.lastProcessedLogLineHash:
+            self.hashStorage.writeHash(self.lastProcessedLogLineHash)
         return self.warnings
     
     def getLastLogLineHash (self) -> str:
